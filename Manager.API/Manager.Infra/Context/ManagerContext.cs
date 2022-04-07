@@ -11,11 +11,6 @@ public class ManagerContext : DbContext
     {
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("Server=localhost;Database=user_manager_api;Trusted_Connection=True;");
-    }
-
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
