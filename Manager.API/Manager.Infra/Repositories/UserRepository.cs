@@ -1,12 +1,13 @@
 ﻿using Manager.Domain.Entities;
 using Manager.Infra.Context;
 using Manager.Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manager.Infra.Repositories;
 
 public class UserRepository : BaseRepository<User>, IUserRepository
 {
-   private readonly ManagerContext _context;
+    private readonly ManagerContext _context;
 
     public UserRepository(ManagerContext context) : base(context)
     {
@@ -14,15 +15,15 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     }
     public async Task<User> GetByEmail(string email)
     {
-       return await _context. Users
-            .Where(u => u.Email.ToLower == email.ToLower())
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
+        return await _context.Users
+             .Where(u => u.Email.ToLower() == email.ToLower())
+             .AsNoTracking()
+             .FirstOrDefaultAsync();
     }
     public async Task<List<User>> SearchByEmail(string email)
     {
-       return await _context.Users
-            .Where(u => u.Email.ToLower().Contains(email.ToLower()))
+        return await _context.Users
+             .Where(u => u.Email.ToLower().Contains(email.ToLower()))
              .AsNoTracking()
              .ToListAsync();
     }
@@ -31,8 +32,8 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
         return await _context.Users
             .Where(u => u.Name.ToLower().Contains(name.ToLower()))
-             .AsNoTracking()
-             .ToListAsync();
+            .AsNoTracking()
+            .ToListAsync();
     }
 
 }
