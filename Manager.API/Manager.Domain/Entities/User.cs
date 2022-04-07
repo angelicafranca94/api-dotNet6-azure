@@ -21,6 +21,8 @@ public class User : Base
         Email = email;
         Password = password;
         _erros = new List<string>();
+
+        Validate();
     }
 
     //Comportamentos
