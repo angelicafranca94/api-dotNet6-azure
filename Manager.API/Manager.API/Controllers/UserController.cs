@@ -4,6 +4,7 @@ using Manager.API.ViewModels;
 using Manager.Core.Exceptions;
 using Manager.Services.DTO;
 using Manager.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Manager.API.Controllers;
@@ -22,6 +23,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     [Route("create")]
     public async Task<IActionResult> Create([FromBody] CreateUserViewModel model)
     {
@@ -49,6 +51,7 @@ public class UserController : ControllerBase
     } 
     
     [HttpPut]
+    [Authorize]
     [Route("update")]
     public async Task<IActionResult> Update([FromBody] UpdateUserViewModel model)
     {
@@ -76,6 +79,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize]
     [Route("delete/{id}")]
     public async Task<IActionResult> Delete(long id)
     {
@@ -101,6 +105,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     [Route("get/{id}")]
     public async Task<IActionResult> GetById(long id)
     {
@@ -135,6 +140,7 @@ public class UserController : ControllerBase
     
     
     [HttpGet]
+    [Authorize]
     [Route("get")]
     public async Task<IActionResult> GetAll()
     {
@@ -160,6 +166,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     [Route("search-by-name")]
     public async Task<IActionResult> SearchByName([FromQuery] string name)
     {
@@ -193,6 +200,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     [Route("search-by-email")]
     public async Task<IActionResult> SearchByEmail([FromQuery] string email)
     {
