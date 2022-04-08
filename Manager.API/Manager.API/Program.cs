@@ -1,4 +1,5 @@
 using AutoMapper;
+using EscNet.IoC.Cryptography;
 using Manager.API.Token;
 using Manager.API.ViewModels;
 using Manager.Domain.Entities;
@@ -120,6 +121,12 @@ builder.Services.AddDbContext<ManagerContext>(options => options
     .EnableSensitiveDataLogging()
     .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole())),
 ServiceLifetime.Transient);
+
+#endregion
+
+#region Cryp
+
+builder.Services.AddRijndaelCryptography(builder.Configuration["Cryptography"]);
 
 #endregion
 

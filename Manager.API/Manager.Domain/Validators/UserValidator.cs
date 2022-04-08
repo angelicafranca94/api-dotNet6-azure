@@ -52,9 +52,9 @@ public class UserValidator : AbstractValidator<User>
             .WithMessage("Senha não pode ser vazio!")
 
             .MinimumLength(6)
-            .WithMessage("Senha deve conter no mínimo 6 caracteres")
+            .WithMessage("Senha deve conter no mínimo 6 caracteres");
 
-            .MaximumLength(20)
-            .WithMessage("Senha deve conter no máximo 20 caracteres"); ;
+            //.MaximumLength(20)
+            //.WithMessage("Senha deve conter no máximo 20 caracteres"); ;
     }
 }
