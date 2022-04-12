@@ -23,6 +23,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
+#region AzureKeyVault
+
+builder.Configuration.AddAzureKeyVault(
+                            builder.Configuration["AzureKeyVault:Vault"],
+                            builder.Configuration["AzureKeyVault:ClientId"],
+                            builder.Configuration["AzureKeyVault:ClientSecret"]);
+
+#endregion
+
 #region Swagger-Auth 
 
 builder.Services.AddSwaggerGen(c =>
@@ -133,11 +142,11 @@ builder.Services.AddRijndaelCryptography(builder.Configuration["Cryptography"]);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
 
 app.UseHttpsRedirection();
 

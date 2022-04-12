@@ -48,8 +48,8 @@ public class UserController : ControllerBase
         {
             return StatusCode(500, Responses.ApplicationErrorMessage());
         }
-    } 
-    
+    }
+
     [HttpPut]
     [Authorize]
     [Route("update")]
@@ -85,7 +85,7 @@ public class UserController : ControllerBase
     {
         try
         {
-           await _userService.Delete(id);
+            await _userService.Delete(id);
 
             return Ok(new ResultViewModel
             {
@@ -112,8 +112,8 @@ public class UserController : ControllerBase
         try
         {
             var user = await _userService.GetById(id);
-            
-            if(user == null)
+
+            if (user == null)
                 return NotFound(new ResultViewModel
                 {
                     Message = "Usuário não encontrado!",
@@ -137,8 +137,8 @@ public class UserController : ControllerBase
             return StatusCode(500, Responses.ApplicationErrorMessage());
         }
     }
-    
-    
+
+
     [HttpGet]
     [Authorize]
     [Route("get")]
@@ -147,13 +147,23 @@ public class UserController : ControllerBase
         try
         {
             var allUsers = await _userService.GetAll();
-          
+
+            if (allUsers.Count > 0)
+                return Ok(new ResultViewModel
+                {
+                    Message = "",
+                    Sucess = true,
+                    Data = allUsers
+                });
+
             return Ok(new ResultViewModel
             {
-                Message = "",
+                Message = "Não há usuários cadastrados!",
                 Sucess = true,
                 Data = allUsers
             });
+
+
         }
         catch (DomainException ex)
         {
