@@ -1,9 +1,9 @@
-﻿using Manager.Core.Exceptions;
+﻿using Manager.Domain.Interfaces;
 using Manager.Domain.Validators;
 
 namespace Manager.Domain.Entities;
 
-public class User : Base
+public class User : Base, IAggregateRoot
 {
     //Propriedades
     public string Name { get; private set; }
@@ -20,44 +20,31 @@ public class User : Base
         Name = name;
         Email = email;
         Password = password;
-        _erros = new List<string>();
+        _errors = new List<string>();
 
         Validate();
     }
 
     //Comportamentos
-    public void ChangeName(string name)
+    public void SetName(string name)
     {
         Name = name;
         Validate();
     }
 
-    public void ChangeEmail(string email)
+    public void SetEmail(string email)
     {
         Email = email;
         Validate();
     } 
     
-    public void ChangePassword(string password)
+    public void SetPassword(string password)
     {
         Password = password;
         Validate();
     }
 
     //Autovalida
-    public override bool Validate()
-    {
-        var validator = new UserValidator();
-        var validation = validator.Validate(this);
-
-        if (!validation.IsValid)
-        {
-            foreach (var error in validation.Errors)
-                _erros.Add(error.ErrorMessage);
-
-            throw new DomainException("Campos inválidos, favor corrigir!", _erros);
-        }
-
-        return true;
-    }
+    public bool Validate()
+        => base.Validate(new UserValidator(), this);
 }

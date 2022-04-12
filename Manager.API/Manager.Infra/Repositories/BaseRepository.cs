@@ -41,10 +41,10 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
 
     public async Task<T> GetById(long id)
     {
-      return await _context.Set<T>()
-            .AsNoTracking()
-            .Where(x => x.Id == id)
-            .FirstOrDefaultAsync();
+        return await _context.Set<T>()
+              .AsNoTracking()
+              .Where(x => x.Id == id)
+              .FirstOrDefaultAsync();
 
     }
 
@@ -55,7 +55,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
             .ToListAsync();
     }
 
-   
+
 
 
 }

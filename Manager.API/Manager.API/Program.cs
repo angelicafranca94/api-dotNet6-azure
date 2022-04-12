@@ -1,5 +1,7 @@
 using AutoMapper;
 using EscNet.IoC.Cryptography;
+using EscNet.IoC.Hashers;
+using Isopoh.Cryptography.Argon2;
 using Manager.API.Token;
 using Manager.API.ViewModels;
 using Manager.Domain.Entities;
@@ -22,6 +24,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+
 
 #region AzureKeyVault
 
@@ -135,7 +139,25 @@ ServiceLifetime.Transient);
 
 #region Cryp
 
-builder.Services.AddRijndaelCryptography(builder.Configuration["Cryptography"]);
+//builder.Services.AddRijndaelCryptography(builder.Configuration["Cryptography"]);
+
+#endregion
+
+#region Hash
+
+var config = new Argon2Config()
+{
+    Type = Argon2Type.DataIndependentAddressing,
+    Version = Argon2Version.Nineteen,
+    Threads = Environment.ProcessorCount,
+    TimeCost = int.Parse(builder.Configuration["Hash:TimeCost"]),
+    MemoryCost = int.Parse(builder.Configuration["Hash:MemoryCost"]),
+    Lanes = int.Parse(builder.Configuration["Hash:Lanes"]),
+    HashLength = int.Parse(builder.Configuration["Hash:HashLength"]),
+    Salt = Encoding.UTF8.GetBytes(builder.Configuration["Hash:Salt"]),
+};
+
+builder.Services.AddArgon2IdHasher(config);
 
 #endregion
 
